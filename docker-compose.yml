@@ -1,0 +1,22 @@
+version: '3'
+services:
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  city_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - city_server
